@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PrintFlow | Queue Consolidator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">P</span><span>printflow<span class="brand-dot">.</span></span></div>
+      <div class="side-label">WORKSPACE</div>
+      <a class="nav-item active" href="#"><span>▦</span> Queue consolidator</a>
+      <a class="nav-item" href="#history"><span>◷</span> Merge history</a>
+      <div class="sidebar-bottom">
+        <div class="status-dot"></div><span>System operational</span>
+        <small>v1.0 · Local workspace</small>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div><div class="eyebrow">PRINT ROOM / OPERATIONS</div><h1>Queue consolidator</h1></div>
+        <div class="top-right"><span class="live-pill"><i></i> LIVE SYSTEM</span><div class="avatar">PO</div></div>
+      </header>
+
+      <section class="intro">
+        <div><div class="eyebrow accent">EXAM WEEK · SHARED PRINT ROOM</div>
+          <h2>One timeline.<br><em>Zero missing jobs.</em></h2>
+          <p>Bring department print queues together into one reliable, chronological schedule.</p>
+        </div>
+        <div class="intro-art"><div class="paper p1">A-07</div><div class="paper p2">B-02</div><div class="paper p3">C-11</div><div class="merge-symbol">↘</div></div>
+      </section>
+
+      <section class="metrics">
+        <div class="metric"><span>DEPARTMENTS</span><strong id="metric-depts">—</strong><small>Input queues</small></div>
+        <div class="metric"><span>JOBS RECEIVED</span><strong id="metric-received">—</strong><small>Across all queues</small></div>
+        <div class="metric"><span>JOBS MERGED</span><strong id="metric-produced">—</strong><small>In final timeline</small></div>
+        <div class="metric"><span>JOBS MISSING</span><strong id="metric-missing">—</strong><small>Expected: 0</small></div>
+      </section>
+
+      <section class="workspace-grid">
+        <div class="panel input-panel">
+          <div class="panel-heading"><div><div class="eyebrow">STEP 01</div><h3>Department queues</h3></div><span class="count-tag">JSON INPUT</span></div>
+          <p class="muted">Enter each department's jobs in ascending timestamp order.</p>
+          <textarea id="input-json" spellcheck="false" aria-label="Department queue JSON"></textarea>
+          <div class="editor-footer"><span id="input-count">3 departments · 7 jobs</span><button class="text-btn" id="reset-btn">↺ Reset sample</button></div>
+          <div class="button-row"><button class="secondary-btn" id="format-btn">Format JSON</button><button class="primary-btn" id="merge-btn">Merge queues <span>→</span></button></div>
+          <div class="hint"><b>ⓘ</b> Tie rule: earliest time first, then department code A–Z. Original order is preserved within each queue.</div>
+          <div id="error-box" class="error-box hidden"></div>
+        </div>
+
+        <div class="panel result-panel">
+          <div class="panel-heading"><div><div class="eyebrow">STEP 02</div><h3>Merged timeline</h3></div><span class="success-tag" id="result-status">AWAITING INPUT</span></div>
+          <p class="muted">The consolidated print schedule, ready for review.</p>
+          <div id="timeline" class="timeline empty-state"><div class="empty-icon">⇢</div><b>Your timeline will appear here</b><span>Run the merge to consolidate all department queues.</span></div>
+          <div class="result-footer"><span id="complexity-label">Algorithm: O(N log K)</span><button class="text-btn" id="download-btn" disabled>↓ Export CSV</button></div>
+        </div>
+      </section>
+
+      <section class="lower-grid">
+        <div class="panel">
+          <div class="panel-heading"><div><div class="eyebrow">INPUT OVERVIEW</div><h3>Queue breakdown</h3></div></div>
+          <div id="queue-breakdown" class="breakdown empty-note">Run a merge to see department queues.</div>
+        </div>
+        <div class="panel" id="history">
+          <div class="panel-heading"><div><div class="eyebrow">RECENT ACTIVITY</div><h3>Merge history</h3></div><button class="text-btn" id="refresh-history">Refresh ↻</button></div>
+          <div id="history-list" class="history-list"><div class="empty-note">Loading history…</div></div>
+        </div>
+      </section>
+      <footer>PRINTFLOW CONSOLIDATOR <span>BUILT WITH LINKED LISTS + CUSTOM MIN HEAP</span></footer>
+    </main>
+  </div>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
